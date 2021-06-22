@@ -1,10 +1,12 @@
 const express = require("express");
-const cors = require("cors");
-const app = express();
 const transactionsController = require("./controllers/transactionsController");
+const app = express();
+
+app.use((req, res, next) => {
+  next();
+});
 
 app.use(express.json());
-app.use(cors());
 
 app.get("/", (req, res) => {
   res.send("Welcome to The Budgeting App!");
