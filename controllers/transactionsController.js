@@ -12,12 +12,6 @@ const validateURL = (req, res, next) => {
     : res.status(400).send("Sorry, not found");
 };
 
-const validateBody = (req, res, next) => {
-  const { date, name, amount } = req.body;
-
-  !date ? res.status(400).send() : next();
-};
-
 transactions.use(validateURL);
 
 transactions.get("/", (req, res) => {
@@ -30,12 +24,12 @@ transactions.get("/:index", (req, res) => {
     : res.redirect("/404");
 });
 
-transactions.post("/", validateBody, (req, res) => {
+transactions.post("/", (req, res) => {
   transactionsArr.push(req.body);
   res.json(transactionsArr[transactionsArr.length - 1]);
 });
 
-transactions.put("/:index", validateBody, (req, res) => {
+transactions.put("/:index", (req, res) => {
   if (transactionsArr[req.params.index]) {
     transactionsArr[req.params.index] = req.body;
     res.status(200).json(transactionsArr[req.params.index]);
