@@ -7,7 +7,7 @@ const validateURL = (req, res, next) => {
   const https = "https://";
   let fullURL = req.protocol + "://" + req.get("host") + req.url;
 
-  fullURL.substring(0, 7) === http || fullURL.substring(0, 8) || https
+  fullURL.substring(0, 7) === http || fullURL.substring(0, 8) === https
     ? next()
     : res.status(400).send("Sorry, not found");
 };
