@@ -1,6 +1,6 @@
 const express = require("express");
 const transactions = express.Router();
-const transactionsArr = require("../models/transaction");
+const transactionsArr = require("../models/transactions");
 
 const validateURL = (req, res, next) => {
   const http = "http://";
