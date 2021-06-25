@@ -2,17 +2,14 @@ const express = require("express");
 const transactions = express.Router();
 const transactionsArr = require("../models/transactions");
 
-const validateURL = (req, res, next) => {
-  const http = "http://";
-  const https = "https://";
-  let fullURL = req.protocol + "://" + req.get("host") + req.url;
-
-  fullURL.substring(0, 7) === http || fullURL.substring(0, 8) === https
-    ? next()
-    : res.status(400).send("Sorry, not found");
+const validateTransaction = (req, res, next) => {
+  const { date, name, amount } = req.body;
+  if (date === undefined || name === undefined || amount === undefined) {
+    res.status(400).send("Sorry, not found");
+  } else {
+    next();
+  }
 };
-
-transactions.use(validateURL);
 
 transactions.get("/", (req, res) => {
   res.json(transactionsArr);
@@ -24,7 +21,7 @@ transactions.get("/:index", (req, res) => {
     : res.redirect("/404");
 });
 
-transactions.post("/", (req, res) => {
+transactions.post("/", validateTransaction, (req, res) => {
   transactionsArr.push(req.body);
   res.json(transactionsArr[transactionsArr.length - 1]);
 });
