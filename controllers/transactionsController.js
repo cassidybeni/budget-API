@@ -5,7 +5,7 @@ const transactionsArr = require("../models/transactions");
 const validateTransaction = (req, res, next) => {
   const { date, name, amount } = req.body;
   if (date === undefined || name === undefined || amount === undefined) {
-    res.status(400).send("Sorry, not found");
+    res.status(400).send("All fields are required.");
   } else {
     next();
   }
